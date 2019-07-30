@@ -1,5 +1,6 @@
 const express = require('express');
 const massive = require('massive')
+const inventoryCtrl = require('./inventoryCtrl')
 const app = express()
 require('dotenv').config()
 
@@ -14,6 +15,10 @@ massive(CONNECTION_STRING).then( db =>
 ).catch(err => (
     console.log('Error connecting to DB',err)
 ))
+
+app.get('/api/inventory', inventoryCtrl.getInventory)
+app.post('/api/inventory', inventoryCtrl.addInventory)
+app.delete('/api/inventory', inventoryCtrl.sellInventory)
 
 
 app.listen(PORT, () => console.log(`${PORT} slurpees, stat!`))
